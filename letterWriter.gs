@@ -16,8 +16,8 @@ const formatName = function(name){
 }
 
 const makeDocCopy = function(data){
-  const templateLetter = DriveApp.getFileById('1gsyP9UW6MJCLHHdPeM_OPfYaLPmMiwV08ZevxjZ4Y3c')
-  const folder = DriveApp.getFolderById('1akIxL5R_z1gqw3A87PhKYP8uPiM-9mOs')
+  const templateLetter = DriveApp.getFileById(keys.fileId)
+  const folder = DriveApp.getFolderById(keys.folderId)
   var copy = templateLetter.makeCopy(data.Name + data.Address1 ,folder);
   var docId = copy.getId();
   return docId
@@ -46,13 +46,13 @@ function doGet(e) {
 }
 
 function apiCall(parcelId) {
-  var headers = {"contentType":"application/json","Host":"gisweb-adapters.bcpa.net","contentLength":"30"};
+  var headers = {"contentType":"application/json","Host":keys.host,"contentLength":"30"};
    var data = {
   folioNumber: parcelId
   };
   var payload = JSON.stringify(data);
-  var params = {"method":"POST","contentType":"application/json","Host":"gisweb-adapters.bcpa.net","Content-Length":"30","payload":payload};
-  var url = "https://gisweb-adapters.bcpa.net/bcpawebmap_ex_new_web/bcpawebmap.aspx/GetDataByFolioNumber"
+  var params = {"method":"POST","contentType":"application/json","Host":keys.host,"Content-Length":"30","payload":payload};
+  var url = keys.url
   var response = UrlFetchApp.fetch(url,params);
   var content = response.getContentText();
   var rawPropertyData = JSON.parse(content);
